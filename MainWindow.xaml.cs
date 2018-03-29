@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,8 +51,8 @@ namespace u2SebastianFishingHole
             int Output = 0;
             while ((TroutFishNumber*TroutPoints) + (PikeFishNumber*PikePoints) + (PickerelFishNumber*PickerelPoints) != TotalPoints & (TroutFishNumber * TroutPoints) + (PikeFishNumber * PikePoints) + (PickerelFishNumber * PickerelPoints) < TotalPoints)
             {
-                if ((TroutFishNumber * TroutPoints) + (PikeFishNumber * PikePoints) + (PickerelFishNumber * PickerelPoints) != TotalPoints)
-                {
+               
+                
                     TroutFishNumber++;
                     MessageBox.Show("trout: " + TroutFishNumber.ToString());
                     CreateLabel(TroutFishNumber, 0, 0);
@@ -67,7 +67,7 @@ namespace u2SebastianFishingHole
                             MessageBox.Show("Pickerel: " + PickerelFishNumber.ToString());
                             CreateLabel(0, 0, PickerelFishNumber);
                         }
-                    }
+                    
                 }
                 if ((TroutFishNumber * TroutPoints) + (PikeFishNumber * PikePoints) + (PickerelFishNumber * PickerelPoints) == TotalPoints)
                 {
@@ -86,30 +86,10 @@ namespace u2SebastianFishingHole
         }
     }
 }
-/*{
-                if ((TroutFishNumber * TroutPoints) != TotalPoints & TroutPoints <= TotalPoints)
-                {
-                    TroutFishNumber++;
-                    CreateLabel(TroutFishNumber, 0, 0);
-                    MessageBox.Show("Trout: " + TroutFishNumber.ToString());
-                    Output = Output + 1;
-                }
-                if ((PikeFishNumber * PikePoints) != TotalPoints & PikePoints <=TotalPoints)
-                {
-                    PikeFishNumber++;
-                    CreateLabel(0, PikeFishNumber, 0);
-                    MessageBox.Show("Pike: " + PikeFishNumber.ToString());
-                    Output = Output + 1;
-                }
-                if ((PikeFishNumber *PickerelPoints) != TotalPoints & PickerelPoints <= TotalPoints)
-                {
-                    PickerelFishNumber++;
-                    CreateLabel(0, 0, PickerelFishNumber);
-                    MessageBox.Show("Pickerel: " + PikeFishNumber.ToString());
-                    Output = Output + 1; 
-                }if ((TroutFishNumber*TroutPoints)+(PikeFishNumber*PikePoints)+(PickerelFishNumber*PickerelPoints)<= TotalPoints)
-                {
-                    lblOutput.Content = Output.ToString();
-                }
-            }
-*/
+
+
+
+    
+
+        
+        
