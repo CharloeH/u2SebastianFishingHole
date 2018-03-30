@@ -13,92 +13,153 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace u2SebastianTXTMSG
+namespace u2SebastianFishingHole
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<string> AllCombos = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
-           
+        }
 
+        private void calculateFishCombos(object sender, RoutedEventArgs e)
+        {  
+            string Input = txtInput.Text;
+            int ACount = 0;
+            int APoints = 0;
+            int BCount = 0;
+            int BPoints = 0;
+            int CCount = 0;
+            int CPoints = 0;
+            int MaxPoints = 0;
+            // Fetch input from window
+            int.TryParse(Input.Substring(0, Input.IndexOf("\r")), out APoints);
+            Input = Input.Substring(Input.IndexOf("\r") + 2);
+            int.TryParse(Input.Substring(0, Input.IndexOf("\r")), out BPoints);
+            Input = Input.Substring(Input.IndexOf("\r") + 2);
+            int.TryParse(Input.Substring(0, Input.IndexOf("\r")), out CPoints);
+            Input = Input.Substring(Input.IndexOf("\r") + 2);
+            int.TryParse(Input.Substring(0, Input.Length), out MaxPoints);
+            
+            // get all combos 
+            GetCombos(ACount, APoints, BCount, BPoints, CCount, CPoints, MaxPoints);
+
+            lblOutput.Content = "Total Combinations: " + this.AllCombos.Count;
+        }
+        
+        
+        // Get all combinations possible given three point values for fish and the maximum points
+        private void GetCombos(int ACount, int APoints, int BCount, int BPoints, int CCount, int CPoints, int MaxPoints)
+        {
+            // get combinations for A-B-C and A-C-B
+            while ((ACount + 1) * APoints + BCount * BPoints + CCount * CPoints <= MaxPoints)
+            {
+                ACount++;
+                AddCombo(ACount, BCount, CCount);
+                while (ACount * APoints + (BCount + 1) * BPoints + CCount * CPoints <= MaxPoints)
+                {
+                    BCount++;
+                    AddCombo(ACount, BCount, CCount);
+                    while (ACount * APoints + BCount * BPoints + (CCount + 1) * CPoints <= MaxPoints)
+                    {
+                        CCount++;
+                        AddCombo(ACount, BCount, CCount);
+                    }
+                    CCount = 0;
+                }
+                BCount = 0;
+                while (ACount * APoints + BCount * BPoints + (CCount + 1) * CPoints <= MaxPoints)
+                {
+                    CCount++;
+                    AddCombo(ACount, BCount, CCount);
+                }
+                CCount = 0;
+            }
+            
+            // get combinations for B-A-C and B-C-A
+            ACount = BCount = CCount = 0;
+            while (ACount * APoints + (BCount + 1) * BPoints + CCount * CPoints <= MaxPoints)
+            {
+                BCount++;
+                AddCombo(ACount, BCount, CCount);
+                while ((ACount + 1) * APoints + BCount * BPoints + CCount * CPoints <= MaxPoints)
+                {
+                    ACount++;
+                    AddCombo(ACount, BCount, CCount);
+                    while (ACount * APoints + BCount * BPoints + (CCount + 1) * CPoints <= MaxPoints)
+                    {
+                        CCount++;
+                        AddCombo(ACount, BCount, CCount);
+                    }
+                    CCount = 0;
+                }
+                ACount = 0;
+                while (ACount * APoints + (BCount + 1) * BPoints + CCount * CPoints <= MaxPoints)
+                {
+                    BCount++;
+                    AddCombo(ACount, BCount, CCount);
+
+                }
+                ACount = 0;
+            }
+
+            // get combinations for C-B-A and C-A-B
+            ACount = BCount = CCount = 0;
+            while (ACount * APoints + BCount * BPoints + (CCount + 1) * CPoints <= MaxPoints)
+            {
+                CCount++;
+                AddCombo(ACount, BCount, CCount);
+                while (ACount * APoints + (BCount + 1) * BPoints + CCount * CPoints <= MaxPoints)
+                {
+                    BCount++;
+                    AddCombo(ACount, BCount, CCount);
+                    while ((ACount + 1) * APoints + BCount * BPoints + CCount * CPoints <= MaxPoints)
+                    {
+                        ACount++;
+                        AddCombo(ACount, BCount, CCount);
+                    }
+                    ACount = 0;
+                }
+                BCount = 0;
+                while ((ACount + 1) * APoints + BCount * BPoints + CCount * CPoints <= MaxPoints)
+                {
+                    ACount++;
+                    AddCombo(ACount, BCount, CCount);
+                }
+                ACount = 0;
+            }
 
         }
 
-        private void btnClick_Click(object sender, RoutedEventArgs e)
+ 
+        // add combos to list (ignore duplicates)
+        private void AddCombo(int ACount, int BCount, int CCount)
         {
-            string Input = txtInput.Text;
-            string Output = "";
-            string Line;
-            string LineEnding = "\r\n";
-            string LastLine = "TTYL";
-            int LineEndingLength = LineEnding.Length;
-            do
+            //check for duplicates
+            string StringCombo = ACount.ToString() + "," + BCount.ToString() + "," + CCount.ToString();
+            foreach(string Combo in this.AllCombos)
             {
-                int EndIndex = Input.IndexOf(LineEnding);
-                if (EndIndex == -1)
+                if (Combo == StringCombo)
                 {
-                    EndIndex = Input.Length;
+                    return; // found duplicate - ignore
                 }
-                Line = Input.Substring(0, EndIndex);
-                if (Line == "CU")
-                {
-                    Output = Output + "See you" + LineEnding;
-                }
-                else if (Line == ":-)")
-                {
-                    Output = Output + "I'm happy" + LineEnding;
-                }
-                else if (Line == ":-(")
-                {
-                    Output = Output + "I'm Sad" + LineEnding;
-                }
-                else if (Line == ";-)")
-                {
-                    Output = Output + "Wink" + LineEnding;
-                }
-                else if (Line == ":-P")
-                {
-                    Output = Output + "stick out my toungue" + LineEnding;
-                }
-                else if (Line == "(~.~)")
-                {
-                    Output = Output + "sleepy" + LineEnding;
-                }
-                else if (Line == "TA")
-                {
-                    Output = Output + "totally awesome" + LineEnding;
-                }
-                else if (Line == "CCC")
-                {
-                    Output = Output + "Canadian Computing Competition" + LineEnding;
-                }
-                else if (Line == "CUZ")
-                {
-                    Output = Output + "thank-you" + LineEnding;
-                }
-                else if (Line == "YW")
-                {
-                    Output = Output + "you're welcome" + LineEnding;
-                }
-                else if (Line == LastLine)
-                {
-                    Output = Output + "Talk to you later";
-                }
-
-                else
-                {
-                    Output = Output + Line + LineEnding;
-                }
-                if (Line != LastLine)
-                {
-                    Input = Input.Substring(EndIndex + LineEndingLength, Input.Length - EndIndex - LineEndingLength);
-                }
-            } while (Line != LastLine);
-            lblOutput.Content = Output;
+            }
+            // add combo
+            this.AllCombos.Add(StringCombo);
+            Label myLabel = new Label();
+            myLabel.Content = "Trout " + ACount + ", " + " Pike " + BCount + ", " + " Pickerel " + CCount;
+            myStackPanel.Children.Add(myLabel);
         }
     }
 }
+
+
+
+        
+    
+

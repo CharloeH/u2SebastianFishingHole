@@ -1,27 +1,27 @@
-﻿<Window x:Class="u2SebastianTXTMSG.MainWindow"
+﻿<Window x:Class="u2SebastianFishingHole.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:u2SebastianTXTMSG"
+        xmlns:local="clr-namespace:u2SebastianFishingHole"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Enter Trout, Pike and Pickerel and Maximum Points" Height="350" Width="525">
     <ScrollViewer>
-        <StackPanel>
-        <TextBox x:Name="txtInput"
-                 Text="TTYL"
-                 AcceptsReturn="True"
+        <StackPanel x:Name="myStackPanel">
+            <TextBox x:Name="txtInput"
+                 Text=""
                  TextWrapping="Wrap"
+                 AcceptsReturn="True"
                  />
-        <Button x:Name="btnClick"
-                Click="btnClick_Click"
+            <Button x:Name="btnClick"
+                Click="calculateFishCombos"
+                Content="Find Combinations"
                 Height="25"
-                Content="Click Me"
                 />
-        <Label x:Name="lblOutput"
-               Content="output"
+            <Label x:Name="lblOutput"
+               Content="Output"
                />
-
-    </StackPanel>
+        </StackPanel>
     </ScrollViewer>
 </Window>
+
