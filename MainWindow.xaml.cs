@@ -1,4 +1,9 @@
-﻿using System;
+/* Sebastian Horton
+March 30th, 2018
+u2SebastianFishingHole
+program takes user's input of point values for trout pike and pickerel as well as the maximum points and outputs all of the possible combinations
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
